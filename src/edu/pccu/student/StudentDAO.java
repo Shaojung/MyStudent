@@ -20,4 +20,5 @@ public interface StudentDAO {
     public ArrayList<Student> getAllStudents();        
     public ArrayList<Student> getRangeStudents(int start, int size);
     public int getSize();
+    public Student findByName(String student_name);
 }

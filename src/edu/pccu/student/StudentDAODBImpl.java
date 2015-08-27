@@ -180,5 +180,31 @@ public class StudentDAODBImpl implements StudentDAO
         }
         return -1;
     }
+
+    @Override
+    public Student findByName(String student_name) {
+        try {
+            Class.forName(DRIVER_NAME);
+            Connection conn = DriverManager.getConnection(CONN_STRING);
+            PreparedStatement pstmt = conn.prepareStatement("Select * from students where student_name = ?");
+            pstmt.setString(1, student_name);            
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next())
+            {
+                Student s = new Student(rs.getInt(1), rs.getString(2), rs.getString(3));
+                return s;
+            }
+            else
+            {
+                return null;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDAODBImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(StudentDAODBImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
 }
